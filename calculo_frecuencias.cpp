@@ -169,8 +169,6 @@ int indice(unsigned char c)
 void calcula_frecuencias(list<frecuencias_t> lista_frecuencias)
 {
 	// Recorre lista de palabras contando ocurrencias
-	unsigned long long int cnt_sim = 0ull, cnt_di = 0ull, cnt_tri = 0ull;
-	//long double cnt_sim = 0, cnt_di = 0, cnt_tri = 0;
 	for (list<frecuencias_t>::iterator f = lista_frecuencias.begin(); f != lista_frecuencias.end(); ++f)
 	{
 		int ind_0 = -1, ind_1 = -1, ind_2 = -1;
@@ -201,9 +199,14 @@ void calcula_frecuencias(list<frecuencias_t> lista_frecuencias)
 				cnt_tri += f->frec_absoluta;
 			}
 		}
-//		cout << "Palabra: " << f->palabra << "\t" << "cnt_sim=" << cnt_sim << endl;
 	}
+}
 
+/*
+ *
+ */
+void guarda_frecuencias(char *archivo_salida, list<frecuencias_t>lista_frecuencias)
+{
 	cout << "Simbolo\tOcurrencias" << endl;
 	for(int i = 0; i < CANTIDAD_SIMBOLOS; i++)
 	{
@@ -219,22 +222,25 @@ void calcula_frecuencias(list<frecuencias_t> lista_frecuencias)
 
 int main(int argc, char *argv[])
 {
-	if (argc < 2)
+	if (argc < 3)
 	{
-		cerr << "Error: Falta nombre de archivo de entrada." << endl;
+		cerr << "Error: Faltan parametros." << endl << endl;
+		cerr << "Uso:" << endl;
+		cerr << "\t" << argv[0] << " <archivo-frecuencias> <archivo-salida>" << endl << endl;
 		exit(EXIT_FAILURE);
 	}
 
 	ios_base::sync_with_stdio(false);
 	cout.imbue(locale("es_UY.UTF-8"));
 	list<frecuencias_t> lista_frecuencias = carga_lista_frecuencias(argv[1]);
-	for (list<frecuencias_t>::iterator it=lista_frecuencias.begin(); it != lista_frecuencias.end(); ++it)
-	{
-		cout << "Palabra: " << it->palabra << endl <<
-				"Frecuencia absoluta: " << it->frec_absoluta << endl <<
-				"Frecuencia normalizada: " << it->frec_normalizada << endl;
-	}
+//	for (list<frecuencias_t>::iterator it=lista_frecuencias.begin(); it != lista_frecuencias.end(); ++it)
+//	{
+//		cout << "Palabra: " << it->palabra << endl <<
+//				"Frecuencia absoluta: " << it->frec_absoluta << endl <<
+//				"Frecuencia normalizada: " << it->frec_normalizada << endl;
+//	}
 
 	calcula_frecuencias(lista_frecuencias);
+	guarda_frecuencias(argv[2], lista_frecuencias);
 	return 0;
 }

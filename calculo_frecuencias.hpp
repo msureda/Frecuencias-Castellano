@@ -66,4 +66,7 @@ unsigned long long int ocurr_di[CANTIDAD_SIMBOLOS][CANTIDAD_SIMBOLOS] = { 0ull }
 // Declara e inicializa matriz para trigramas
 unsigned long long int ocurr_tri[CANTIDAD_SIMBOLOS][CANTIDAD_SIMBOLOS][CANTIDAD_SIMBOLOS] = { 0ull };
 
+// Contadores de cantidad total de simbolos, digramas y trigramas
+unsigned long long int cnt_sim = 0ull, cnt_di = 0ull, cnt_tri = 0ull;
+
 #endif /* CALCULO_FRECUENCIAS_HPP_ */
