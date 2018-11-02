@@ -1,10 +1,9 @@
-/*
- * calculo_frecuencias.hpp
- *
- *  Created on: 28/10/2018
- *      Author: marcelo
- */
-
+//
+//  calculo_frecuencias.hpp
+//
+//   Created on: 28/10/2018
+//       Author: marcelo
+//
 #ifndef CALCULO_FRECUENCIAS_HPP_
 #define CALCULO_FRECUENCIAS_HPP_
 
@@ -46,7 +45,7 @@ enum constantes
 
 
 // Estructura con frecuencias de palabras
-struct frecuencias_t
+struct Frecuencia_t
 {
 	std::string 		palabra;
 	unsigned long long	frec_absoluta;

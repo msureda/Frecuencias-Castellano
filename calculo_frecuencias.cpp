@@ -1,9 +1,9 @@
-/*
- * calculo_frecuencias.cpp
- *
- *  Created on: 27/10/2018
- *      Author: Marcelo Sureda
- */
+//
+//  calculo_frecuencias.cpp
+//
+//   Created on: 27/10/2018
+//       Author: Marcelo Sureda
+//
 #include "calculo_frecuencias.hpp"
 
 #include <cctype>
@@ -17,11 +17,11 @@
 #include <list>
 using namespace std;
 
-/*
- * elimina_tildes
- * Traduce un string de entrada en uno
- * sin tildes y con minusculas.
- */
+//
+//  elimina_tildes
+//  Traduce un string de entrada en uno
+//  sin tildes y con minusculas.
+//
 void procesa_palabra(string &entrada)
 {
 	for (string::iterator it=entrada.begin(); it!=entrada.end(); ++it)
@@ -74,10 +74,10 @@ void procesa_palabra(string &entrada)
 	}
 }
 
-/*
- * elimina_comas_numero
- * Procesa el string numérico eliminando las comas
- */
+//
+//  elimina_comas_numero
+//  Procesa el string numérico eliminando las comas
+//
 void elimina_comas_numero(string &str_double)
 {
 	size_t pos = 0;
@@ -88,13 +88,13 @@ void elimina_comas_numero(string &str_double)
 	}
 }
 
-/*
- * carga_lista_frecuencias
- * Carga en memoria la lista de frecuencias del archivo
- * con el formato:
- * Orden	Palabra	Frec.absoluta	Frec.normalizada
- */
-list<frecuencias_t> carga_lista_frecuencias(char *archivo_frecuencias)
+//
+//  carga_lista_frecuencias
+//  Carga en memoria la lista de frecuencias del archivo
+//  con el formato:
+//  Orden	Palabra	Frec.absoluta	Frec.normalizada
+//
+list<Frecuencia_t> carga_lista_frecuencias(char *archivo_frecuencias)
 {
 	// Abre Archivo
 	ifstream ifrecuencias(archivo_frecuencias, ifstream::in);
@@ -109,12 +109,12 @@ list<frecuencias_t> carga_lista_frecuencias(char *archivo_frecuencias)
 	getline(ifrecuencias, ifrec_linea);
 
 	// Carga frecuencias a lista en memoria
-	list<frecuencias_t> lista_frecuencias;
+	list<Frecuencia_t> lista_frecuencias;
 	while (getline(ifrecuencias, ifrec_linea))
 	{
 		// Lee stream de archivo de entrada
 		istringstream ifrec_stream(ifrec_linea);
-		frecuencias_t frecuencia;
+		Frecuencia_t frecuencia;
 		string ind, str_frec_absoluta, str_frec_normalizada;
 		ifrec_stream >> ind >> frecuencia.palabra >>
 				str_frec_absoluta >> str_frec_normalizada;
@@ -139,12 +139,11 @@ list<frecuencias_t> carga_lista_frecuencias(char *archivo_frecuencias)
 	return lista_frecuencias;
 }
 
-
-/*
- * indice
- * Devuelve el indice del alfabeto a usar
- * en el array de simbolos.
- */
+//
+//  indice
+//  Devuelve el indice del alfabeto a usar
+//  en el array de simbolos.
+//
 int indice(unsigned char c)
 {
 	if (c >= 'a' && c <= 'n')
@@ -165,15 +164,15 @@ int indice(unsigned char c)
 	}
 }
 
-/*
- * calcula_frecuencias
- * Cuenta la cantidad de ocurrencias de simbolos,
- * digramas y trigramas
- */
-void calcula_frecuencias(list<frecuencias_t> lista_frecuencias)
+//
+//  calcula_frecuencias
+//  Cuenta la cantidad de ocurrencias de simbolos,
+//  digramas y trigramas
+//
+void calcula_frecuencias(list<Frecuencia_t> lista_frecuencias)
 {
 	// Recorre lista de palabras contando ocurrencias
-	for (list<frecuencias_t>::iterator f = lista_frecuencias.begin(); f != lista_frecuencias.end(); ++f)
+	for (list<Frecuencia_t>::iterator f = lista_frecuencias.begin(); f != lista_frecuencias.end(); ++f)
 	{
 		int ind_0 = -1, ind_1 = -1, ind_2 = -1;
 		for (int i = 0; i < f->palabra.length(); ++i)
@@ -206,12 +205,12 @@ void calcula_frecuencias(list<frecuencias_t> lista_frecuencias)
 	}
 }
 
-/*
- * guarda_frecuencias
- * Guarda en archivo de salida cantidad de ocurrencias
- * y frecuencias obtenidas
- */
-void guarda_frecuencias(char *archivo_salida, list<frecuencias_t>lista_frecuencias)
+//
+//  guarda_frecuencias
+//  Guarda en archivo de salida cantidad de ocurrencias
+//  y frecuencias obtenidas
+//
+void guarda_frecuencias(char *archivo_salida, list<Frecuencia_t>lista_frecuencias)
 {
 	// Abre Archivo
 	ofstream ofrecuencias(archivo_salida, ofstream::out);
@@ -277,7 +276,7 @@ int main(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	}
 
-	list<frecuencias_t> lista_frecuencias = carga_lista_frecuencias(argv[1]);
+	list<Frecuencia_t> lista_frecuencias = carga_lista_frecuencias(argv[1]);
 	calcula_frecuencias(lista_frecuencias);
 	guarda_frecuencias(argv[2], lista_frecuencias);
 	return 0;
