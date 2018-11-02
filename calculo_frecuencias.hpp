@@ -53,9 +53,10 @@ struct frecuencias_t
 	double				frec_normalizada;
 };
 
-char alfabeto[] = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
-					'j', 'k', 'l', 'm', 'n', ENIE_MINUSCULA, 'o', 'p', 'q',
-					'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
+const char alfabeto[] =
+		{ 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
+		  'j', 'k', 'l', 'm', 'n', ENIE_MINUSCULA, 'o', 'p', 'q',
+		  'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
 
 // Declara e inicializa matriz para simbolos
 unsigned long long int ocurr_sim[CANTIDAD_SIMBOLOS] = { 0ull };
