@@ -113,7 +113,8 @@ list<frecuencias_t> carga_lista_frecuencias(char *archivo_frecuencias)
 		istringstream ifrec_stream(ifrec_linea);
 		frecuencias_t frecuencia;
 		string ind, str_frec_absoluta, str_frec_normalizada;
-		ifrec_stream >> ind >> frecuencia.palabra >> str_frec_absoluta >> str_frec_normalizada;
+		ifrec_stream >> ind >> frecuencia.palabra >>
+				str_frec_absoluta >> str_frec_normalizada;
 		// Procesa palabra entrada
 		procesa_palabra(frecuencia.palabra);
 		elimina_comas_numero(str_frec_absoluta);
@@ -169,8 +170,6 @@ int indice(unsigned char c)
 void calcula_frecuencias(list<frecuencias_t> lista_frecuencias)
 {
 	// Recorre lista de palabras contando ocurrencias
-	unsigned long long int cnt_sim = 0ull, cnt_di = 0ull, cnt_tri = 0ull;
-	//long double cnt_sim = 0, cnt_di = 0, cnt_tri = 0;
 	for (list<frecuencias_t>::iterator f = lista_frecuencias.begin(); f != lista_frecuencias.end(); ++f)
 	{
 		int ind_0 = -1, ind_1 = -1, ind_2 = -1;
@@ -201,40 +200,81 @@ void calcula_frecuencias(list<frecuencias_t> lista_frecuencias)
 				cnt_tri += f->frec_absoluta;
 			}
 		}
-//		cout << "Palabra: " << f->palabra << "\t" << "cnt_sim=" << cnt_sim << endl;
+	}
+}
+
+/*
+ * guarda_frecuencias
+ * Guarda en archivo de salida cantidad de ocurrencias
+ * y frecuencias obtenidas
+ */
+void guarda_frecuencias(char *archivo_salida, list<frecuencias_t>lista_frecuencias)
+{
+	// Abre Archivo
+	ofstream ofrecuencias(archivo_salida, ofstream::out);
+	if (ofrecuencias.fail())
+	{
+		cerr << "Error: Fallo abriendo " << archivo_salida << endl;
+		exit(EXIT_FAILURE);
 	}
 
-	cout << "Simbolo\tOcurrencias" << endl;
+	// Unigramas
+	ofrecuencias << "Simbolo\tOcurrencias\tFrecuencia\n";
 	for(int i = 0; i < CANTIDAD_SIMBOLOS; i++)
 	{
-		cout << alfabeto[i] << "\t" << ocurr_sim[i] << endl;
-	}
-	cout << "Simbolo\tFrecuencia" << endl;
-	for(int i = 0; i < CANTIDAD_SIMBOLOS; i++)
-	{
-		cout << alfabeto[i] << "\t" << (double)ocurr_sim[i]/cnt_sim << endl;
+		ofrecuencias << alfabeto[i] << "\t" <<
+					ocurr_sim[i] << "\t" <<
+					(double)ocurr_sim[i]/cnt_sim << "\n";
 	}
 
+	// Digramas
+	ofrecuencias << "Digrama\tOcurrencias\tFrecuencia\n";
+	for(int i = 0; i < CANTIDAD_SIMBOLOS; i++)
+	{
+		for(int j = 0; j < CANTIDAD_SIMBOLOS; j++)
+		{
+			if (ocurr_di[i][j] > 0)
+			{
+				ofrecuencias << alfabeto[i] << alfabeto[j] << "\t" <<
+							ocurr_di[i][j] << "\t" <<
+							(double)ocurr_di[i][j]/cnt_di << "\n";
+			}
+		}
+	}
+
+	// Trigramas
+	ofrecuencias << "Trigrama\tOcurrencias\tFrecuencia\n";
+	for(int i = 0; i < CANTIDAD_SIMBOLOS; i++)
+	{
+		for(int j = 0; j < CANTIDAD_SIMBOLOS; j++)
+		{
+			for(int k = 0; k < CANTIDAD_SIMBOLOS; k++)
+			{
+				if (ocurr_tri[i][j][k] > 0)
+				{
+					ofrecuencias << alfabeto[i] << alfabeto[j] << alfabeto[k] << "\t" <<
+								ocurr_tri[i][j][k] << "\t" <<
+								(double)ocurr_tri[i][j][k]/cnt_tri << "\n";
+				}
+			}
+		}
+	}
+	ofrecuencias.close();
 }
 
 int main(int argc, char *argv[])
 {
-	if (argc < 2)
+	if (argc < 3)
 	{
-		cerr << "Error: Falta nombre de archivo de entrada." << endl;
+		cerr << "Error: Faltan parametros.\n\nUso:\n";
+		cerr << "\t" << argv[0] << " <archivo-frecuencias> <archivo-salida>\n" << endl;
 		exit(EXIT_FAILURE);
 	}
 
 	ios_base::sync_with_stdio(false);
-	cout.imbue(locale("es_UY.UTF-8"));
+	cout.imbue(locale("es_ES.UTF-8"));
 	list<frecuencias_t> lista_frecuencias = carga_lista_frecuencias(argv[1]);
-	for (list<frecuencias_t>::iterator it=lista_frecuencias.begin(); it != lista_frecuencias.end(); ++it)
-	{
-		cout << "Palabra: " << it->palabra << endl <<
-				"Frecuencia absoluta: " << it->frec_absoluta << endl <<
-				"Frecuencia normalizada: " << it->frec_normalizada << endl;
-	}
-
 	calcula_frecuencias(lista_frecuencias);
+	guarda_frecuencias(argv[2], lista_frecuencias);
 	return 0;
 }

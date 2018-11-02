@@ -53,9 +53,10 @@ struct frecuencias_t
 	double				frec_normalizada;
 };
 
-char alfabeto[] = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
-					'j', 'k', 'l', 'm', 'n', ENIE_MINUSCULA, 'o', 'p', 'q',
-					'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
+const char alfabeto[] =
+		{ 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
+		  'j', 'k', 'l', 'm', 'n', ENIE_MINUSCULA, 'o', 'p', 'q',
+		  'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
 
 // Declara e inicializa matriz para simbolos
 unsigned long long int ocurr_sim[CANTIDAD_SIMBOLOS] = { 0ull };
@@ -65,5 +66,8 @@ unsigned long long int ocurr_di[CANTIDAD_SIMBOLOS][CANTIDAD_SIMBOLOS] = { 0ull }
 
 // Declara e inicializa matriz para trigramas
 unsigned long long int ocurr_tri[CANTIDAD_SIMBOLOS][CANTIDAD_SIMBOLOS][CANTIDAD_SIMBOLOS] = { 0ull };
+
+// Contadores de cantidad total de simbolos, digramas y trigramas
+unsigned long long int cnt_sim = 0ull, cnt_di = 0ull, cnt_tri = 0ull;
 
 #endif /* CALCULO_FRECUENCIAS_HPP_ */
