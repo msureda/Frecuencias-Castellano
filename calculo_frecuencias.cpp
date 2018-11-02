@@ -74,6 +74,10 @@ void procesa_palabra(string &entrada)
 	}
 }
 
+/*
+ * elimina_comas_numero
+ * Procesa el string numérico eliminando las comas
+ */
 void elimina_comas_numero(string &str_double)
 {
 	size_t pos = 0;
@@ -83,7 +87,6 @@ void elimina_comas_numero(string &str_double)
 		str_double.erase(pos, 1);
 	}
 }
-
 
 /*
  * carga_lista_frecuencias
@@ -218,6 +221,9 @@ void guarda_frecuencias(char *archivo_salida, list<frecuencias_t>lista_frecuenci
 		exit(EXIT_FAILURE);
 	}
 
+	ios_base::sync_with_stdio(false);
+	ofrecuencias.imbue(locale("es_UY.UTF-8"));
+
 	// Unigramas
 	ofrecuencias << "Simbolo\tOcurrencias\tFrecuencia\n";
 	for(int i = 0; i < CANTIDAD_SIMBOLOS; i++)
@@ -271,8 +277,6 @@ int main(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	}
 
-	ios_base::sync_with_stdio(false);
-	cout.imbue(locale("es_ES.UTF-8"));
 	list<frecuencias_t> lista_frecuencias = carga_lista_frecuencias(argv[1]);
 	calcula_frecuencias(lista_frecuencias);
 	guarda_frecuencias(argv[2], lista_frecuencias);
