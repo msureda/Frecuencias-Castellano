@@ -8,7 +8,6 @@
 
 #include <cctype>
 #include <cstdlib>
-#include <clocale>
 #include <ios>
 #include <iostream>
 #include <fstream>
@@ -220,12 +219,9 @@ void guarda_frecuencias(char *archivo_salida, list<Frecuencia_t>lista_frecuencia
 		exit(EXIT_FAILURE);
 	}
 
-	ios_base::sync_with_stdio(false);
-	ofrecuencias.imbue(locale("es_UY.UTF-8"));
-
 	// Unigramas
 	ofrecuencias << "Simbolo\tOcurrencias\tFrecuencia\n";
-	for(int i = 0; i < CANTIDAD_SIMBOLOS; i++)
+	for(int i = 0; i < CANTIDAD_SIMBOLOS; ++i)
 	{
 		ofrecuencias << alfabeto[i] << "\t" <<
 					ocurr_sim[i] << "\t" <<
@@ -234,9 +230,9 @@ void guarda_frecuencias(char *archivo_salida, list<Frecuencia_t>lista_frecuencia
 
 	// Digramas
 	ofrecuencias << "Digrama\tOcurrencias\tFrecuencia\n";
-	for(int i = 0; i < CANTIDAD_SIMBOLOS; i++)
+	for(int i = 0; i < CANTIDAD_SIMBOLOS; ++i)
 	{
-		for(int j = 0; j < CANTIDAD_SIMBOLOS; j++)
+		for(int j = 0; j < CANTIDAD_SIMBOLOS; ++j)
 		{
 			if (ocurr_di[i][j] > 0)
 			{
@@ -249,11 +245,11 @@ void guarda_frecuencias(char *archivo_salida, list<Frecuencia_t>lista_frecuencia
 
 	// Trigramas
 	ofrecuencias << "Trigrama\tOcurrencias\tFrecuencia\n";
-	for(int i = 0; i < CANTIDAD_SIMBOLOS; i++)
+	for(int i = 0; i < CANTIDAD_SIMBOLOS; ++i)
 	{
-		for(int j = 0; j < CANTIDAD_SIMBOLOS; j++)
+		for(int j = 0; j < CANTIDAD_SIMBOLOS; ++j)
 		{
-			for(int k = 0; k < CANTIDAD_SIMBOLOS; k++)
+			for(int k = 0; k < CANTIDAD_SIMBOLOS; ++k)
 			{
 				if (ocurr_tri[i][j][k] > 0)
 				{
