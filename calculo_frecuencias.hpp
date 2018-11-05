@@ -14,6 +14,7 @@ enum constantes
 	CANTIDAD_SIMBOLOS			= 27,
 
 	// Constantes para identificar letras con tildes
+	// Codificacion: ISO-8859-1
 	A_MINUSCULA_ACENTO_AGUDO	= 0xffffffe1,	// á
 	A_MINUSCULA_ACENTO_GRAVE	= 0xffffffe0,	// à
 	A_MAYUSCULA_ACENTO_AGUDO	= 0xffffffc1,	// Á

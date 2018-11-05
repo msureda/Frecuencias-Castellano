@@ -17,7 +17,7 @@
 using namespace std;
 
 //
-//  elimina_tildes
+//  procesa_palabra
 //  Traduce un string de entrada en uno
 //  sin tildes y con minusculas.
 //
